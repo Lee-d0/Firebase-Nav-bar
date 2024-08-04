@@ -4,10 +4,11 @@ import React from 'react'
 import { auth }  from './firebase/init'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut , onAuthStateChanged } from "firebase/auth";
 let loggedin = false
+
 function App() {
   const [user, setUser] = React.useState({})
   const [loading, setLoading] = React.useState(true)
- 
+  
  
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -42,7 +43,7 @@ function App() {
       console.log(error.message)
     })
   }
-
+  
 
 
   function logOut(){
@@ -60,20 +61,15 @@ function App() {
               </figure>
       </div>
       <div className='btn__container'>
+        {
+          !loggedin ? (<><button onClick={register}>Register</button>
+        <button onClick={logIn}>LogIn</button>{" "}</>) : (<button onClick={logOut}>LogOut</button>)
+        
+        }
+        {loading ? "loading.." : user.email[0].toUpperCase()}
       
-        <button onClick={register}>Register</button>
-        <button onClick={logIn}>LogIn</button>
-        
-        <button onClick={logOut}>LogOut</button> 
-        {loading ? "loading..." : user.email}
-        
-       
-        
-       
-        
-        
-        
-      </div>
+        </div>
+      
       
     </div>
   );
