@@ -12,15 +12,54 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 50px;
+  margin: 0 20px;
 }
 
 .skeleton{
   background-color: gray;
+  color: gray;
+  padding: 10px 20px;
+  border-radius: 100%;
 }
 
 .btn__logout{
-  padding: 10px;
+ 
+  color: white;
+  border: none;
+  font-weight: bold;
+  font-size: 20px;
+  background-color: rgb(146, 7, 146);
   border-radius: 100%;
-  width: 40px;
-  height: 40px;
+  padding: 10px 15px;
+}
+.skeleton{
+  font-weight: bold;
+  font-size: 20px;
+  background-color: gray;
+  border-radius: 100%;
+  padding: 10px 15px;
+}
+
+
+.btn__login{
+  color: #0a0a0a;
+  margin-right: 4px;
+  padding: 6px 16px;
+  transition: opacity .2s;
+  cursor: pointer;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+}
+
+.btn__register{
+  margin-left: 16px;
+  font-weight: 700;
+  padding: 6px 24px;
+  color: white;
+  background-color: #4d4dff; 
+  border-radius: 5px;
+  border: none;
+
 }

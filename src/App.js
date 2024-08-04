@@ -11,17 +11,20 @@ function App() {
   
  
   React.useEffect(() => {
+      const unsubscribe = 
     onAuthStateChanged(auth, (user) => {
       setLoading(false)
-      loggedin = true
-
+      
       if(user){
         setUser(user) 
-      } 
+      }else{
+        setUser(null)
+      }
   })
+  return () => unsubscribe()
   }, [])
   function register(){
-    loggedin = true
+    
     console.log('register')
     createUserWithEmailAndPassword(auth,'email@email.com', 'test123')
     .then((user) => {  
@@ -32,11 +35,9 @@ function App() {
   }
 
   function logIn(){
-    
+    loggedin = true
     signInWithEmailAndPassword(auth,'email@email.com', 'test123')
-    .then(({ user }) => {  
-      console.log(user.email[0].toUpperCase())
-      loggedin = true
+    .then(({ user }) => {
       setUser(user)
     }).catch((error) => {
       // setErrorMessage('Password or email is incorrect')
@@ -48,7 +49,7 @@ function App() {
 
   function logOut(){
     signOut(auth)
-    loggedin = false
+    loggedin= false
     setUser({})
     
   }
@@ -62,11 +63,11 @@ function App() {
       </div>
       <div className='btn__container'>
         {
-          !loggedin ? (<><button onClick={register}>Register</button>
-        <button onClick={logIn}>LogIn</button>{" "}</>) : (<button onClick={logOut}>LogOut</button>)
+          !loggedin ? (<><button className='btn__login' onClick={logIn}>LogIn</button>
+        <button className='btn__register' onClick={register}>Register</button>{" "}</>) : (<>{""}</>)
         
         }
-        {loading ? "loading.." : user.email[0].toUpperCase()}
+        {loading ? <div className='skeleton'>h</div> : user && user.email ? (<><button onClick={logOut} className='btn__logout'>{user.email[0].toUpperCase()}</button></>) : ""}
       
         </div>
       
