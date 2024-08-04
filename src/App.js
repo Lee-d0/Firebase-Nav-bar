@@ -3,21 +3,24 @@ import './App.css';
 import React from 'react'
 import { auth }  from './firebase/init'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut , onAuthStateChanged } from "firebase/auth";
-
+let loggedin = false
 function App() {
   const [user, setUser] = React.useState({})
   const [loading, setLoading] = React.useState(true)
-  
+ 
  
   React.useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       setLoading(false)
+      loggedin = true
+
       if(user){
         setUser(user) 
       } 
   })
   }, [])
   function register(){
+    loggedin = true
     console.log('register')
     createUserWithEmailAndPassword(auth,'email@email.com', 'test123')
     .then((user) => {  
@@ -28,10 +31,11 @@ function App() {
   }
 
   function logIn(){
+    
     signInWithEmailAndPassword(auth,'email@email.com', 'test123')
     .then(({ user }) => {  
       console.log(user.email[0].toUpperCase())
-      
+      loggedin = true
       setUser(user)
     }).catch((error) => {
       // setErrorMessage('Password or email is incorrect')
@@ -43,6 +47,7 @@ function App() {
 
   function logOut(){
     signOut(auth)
+    loggedin = false
     setUser({})
     
   }
@@ -58,9 +63,10 @@ function App() {
       
         <button onClick={register}>Register</button>
         <button onClick={logIn}>LogIn</button>
-        {
-          loading ? (<><button onClick={logOut}>LogOut</button></>) : user.email
-        }
+        
+        <button onClick={logOut}>LogOut</button> 
+        {loading ? "loading..." : user.email}
+        
        
         
        
